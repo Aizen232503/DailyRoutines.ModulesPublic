@@ -82,6 +82,9 @@ public unsafe class AutoDismount : ModuleBase
         if (IObjectTable.Instance().LocalPlayer is not { } localPlayer) return false;
         if (!LuminaGetter.TryGetRow<Action>(actionID, out var actionRow)) return false;
 
+        // 自动派生的原技能不下坐骑
+        if (actionType == ActionType.Action && actionRow.SecondaryCostType == 73) return false;
+
         var actionManager = ActionManager.Instance();
         if (actionManager == null) return false;
 
